@@ -1,0 +1,47 @@
+sudo: false
+dist: precise
+language: cpp
+git:
+  submodules: false
+
+matrix:
+  include:
+    - compiler: clang-3.6
+      addons:
+        apt:
+          packages:
+            - clang-3.6
+            - yasm
+            - automake
+            - libtool
+            - libalut-dev
+            - libglu1-mesa-dev
+            - xorg-dev
+            - autotools-dev
+            - cmake
+            - cmake-data
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+            - george-edison55-precise-backports
+
+before_install:
+  - git submodule update --init --recursive LTerminal
+  - git submodule update --init core
+  - cd core
+  - git submodule update --init --recursive CMake imports/cmake-precompiled-header imports/glog imports/googletest imports/flatbuffers imports/giflib imports/libjpeg-turbo
+  - cd ..
+  - echo $TRAVIS_OS_NAME
+  - echo $LANG
+  - echo $LC_ALL
+  - pwd
+  - cmake --version
+
+script:
+  - if [ $TRAVIS_OS_NAME == linux ]; then mkdir linux; cd linux; export CC="clang-3.6" CXX="clang++-3.6"; fi
+  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.cmake ..
+  - cd LTerminal
+  - make
+
+after_success:
+  - echo "success"
