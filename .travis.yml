@@ -1,29 +1,22 @@
-sudo: false
-dist: precise
-language: cpp
+dist: trusty
+sudo: required
+services: [ docker ]
+os: linux
+compiler: gcc
+cache: ccache
+
 git:
+  depth: 10
   submodules: false
 
+env:
+  matrix:
+  - OS=ubuntu DIST=artful 
+
 matrix:
-  include:
-    - compiler: clang-3.6
-      addons:
-        apt:
-          packages:
-            - clang-3.6
-            - yasm
-            - automake
-            - libtool
-            - libalut-dev
-            - libglu1-mesa-dev
-            - xorg-dev
-            - autotools-dev
-            - cmake
-            - cmake-data
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
-            - george-edison55-precise-backports
+  fast_finish: true
+  allow_failures:
+  - env: OS=ubuntu DIST=artful
 
 before_install:
   - git submodule update --init --recursive LTerminal
@@ -35,13 +28,22 @@ before_install:
   - echo $LANG
   - echo $LC_ALL
   - pwd
-  - cmake --version
 
-script:
-  - if [ $TRAVIS_OS_NAME == linux ]; then mkdir linux; cd linux; export CC="clang-3.6" CXX="clang++-3.6"; fi
-  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.cmake ..
-  - cd LTerminal
-  - make
+install: |-
+  DOCKER=lucidfusionlabs/build:$OS${DIST:+.$DIST}${ARCH:+.$ARCH}
+  ccache -s || true
+  docker pull ${DOCKER}
+  docker build core/docker/$OS${DIST:+.$DIST}${ARCH:+.$ARCH} --cache-from ${DOCKER} -t ${DOCKER}
+
+script: |-
+  mkdir build || true
+  chmod -fR a+rwX $HOME/.ccache
+  docker run -it --rm -w /LTerminal-linux/build \
+                      -v $HOME/.ccache:/root/.ccache \
+                      -v $TRAVIS_BUILD_DIR:/LTerminal-linux ${DOCKER} \
+    bash -c "cmake -DCMAKE_BUILD_TYPE=Release"\
+            "-DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.cmake"\
+            "cmake .. && cd LTerminal && make"
 
 after_success:
   - echo "success"
