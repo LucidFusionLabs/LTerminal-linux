@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 include(core/CMake/LFLOS.cmake)
 
-set(LFL_QT 1)
+set(LFL_CCACHE 1)
 set(LFL_FLATBUFFERS 1)
+set(LFL_QT 1)
 set(LFL_PNG 1)
 set(LFL_GIF 1)
 set(LFL_JPEG 1)

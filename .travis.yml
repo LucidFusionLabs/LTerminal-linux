@@ -11,7 +11,8 @@ git:
 
 env:
   matrix:
-  - OS=ubuntu DIST=artful 
+  - OS=ubuntu DIST=artful
+  - OS=ubuntu DIST=bionic
 
 matrix:
   fast_finish: true
