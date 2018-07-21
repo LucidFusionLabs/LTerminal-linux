@@ -44,9 +44,7 @@ script: |-
   docker run -it --rm -w /LTerminal-linux/linux \
                       -v $HOME/.ccache:/root/.ccache \
                       -v $TRAVIS_BUILD_DIR:/LTerminal-linux ${DOCKER} \
-    bash -c "cmake -DCMAKE_BUILD_TYPE=Release
-                   -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.cmake
-             .. && make package"
+    bash -c "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.cmake .. && make package"
 
 after_success:
   - ccache -s || true
