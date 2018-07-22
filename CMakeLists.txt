@@ -3,7 +3,9 @@ include(core/CMake/LFLOS.cmake)
 
 set(LFL_CPACK 1)
 set(LFL_CCACHE 1)
-set(LFL_QT 1)
+set(LFL_GLEW 1)
+set(LFL_OPENGL 1)
+#set(LFL_QT 1)
 set(LFL_PNG 1)
 set(LFL_GIF 1)
 set(LFL_JPEG 1)
@@ -40,7 +42,7 @@ SET(CPACK_DEBIAN_PACKAGE_RELEASE 1)
 SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5widgets5,libqt5opengl5")
 SET(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 SET(CPACK_RPM_FILE_NAME RPM-DEFAULT)
-SET(CPACK_RPM_PACKAGE_LICENSE GPL-2+)
+SET(CPACK_RPM_PACKAGE_LICENSE GPL-3+)
 SET(CPACK_RPM_PACKAGE_URL ${CPACK_DEBIAN_PACKAGE_HOMEPAGE})
 SET(CPACK_RPM_PACKAGE_OBSOLETES ${CPACK_DEBIAN_PACKAGE_REPLACES})
 SET(CPACK_RPM_PACKAGE_AUTOREQ ON)
@@ -53,7 +55,13 @@ SET(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
     /usr/share/icons/hicolor/scalable
     /usr/share/icons/hicolor/scalable/apps)
 
+set(LTerminal_BIN_DIR bin)
+set(LTerminal_DOC_DIR share/doc/LTerminal)
+set(LTerminal_RES_DIR share/LTerminal/res)
+set(LFL_APP_ASSET_PATH ../share/LTerminal/res)
+
 include(core/CMake/LFLCore.cmake)
 add_subdirectory(${LFL_SOURCE_DIR}/core/web ${LFL_CORE_BINARY_DIR}/web)
+
 add_subdirectory(LTerminal)
 
