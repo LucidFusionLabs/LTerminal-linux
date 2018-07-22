@@ -26,7 +26,7 @@ before_install:
   - git submodule update --init --recursive LTerminal
   - git submodule update --init core
   - cd core
-  - git submodule update --init --recursive CMake imports/cmake-precompiled-header imports/glog imports/googletest imports/flatbuffers imports/giflib imports/libjpeg-turbo
+  - git submodule update --init --recursive CMake imports/cmake-precompiled-header imports/glog imports/googletest imports/flatbuffers imports/giflib imports/libjpeg-turbo imports/glew
   - cd ..
   - echo $TRAVIS_OS_NAME
   - echo $LANG
