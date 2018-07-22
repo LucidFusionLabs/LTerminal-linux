@@ -44,7 +44,7 @@ script: |-
   mkdir linux || true
   chmod -fR a+rwX $HOME/.ccache
   CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.${OS}.cmake"
-  docker run -it --rm -e OS=${OS} -e DIST=${DIST}
+  docker run -it --rm -e OS=${OS} -e DIST=${DIST} \
              -w /LTerminal-linux/linux \
              -v $HOME/.ccache:/root/.ccache \
              -v $TRAVIS_BUILD_DIR:/LTerminal-linux ${DOCKER} \

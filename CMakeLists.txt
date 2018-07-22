@@ -58,7 +58,7 @@ SET(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
 set(LTerminal_INSTALL_BIN bin)
 set(LTerminal_INSTALL_DOC share/doc/LTerminal)
 set(LTerminal_INSTALL_RES share/LTerminal/res)
-set(LFL_APP_ASSET_PATH ../share/LTerminal/res)
+set(LFL_APP_ASSET_PATH /usr/share/LTerminal/res)
 
 include(core/CMake/LFLCore.cmake)
 add_subdirectory(${LFL_SOURCE_DIR}/core/web ${LFL_CORE_BINARY_DIR}/web)
