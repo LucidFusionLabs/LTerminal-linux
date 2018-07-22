@@ -13,12 +13,14 @@ env:
   matrix:
   - OS=ubuntu DIST=artful
   - OS=ubuntu DIST=bionic
+  - OS=centos DIST=7.4.1708
 
 matrix:
   fast_finish: true
   allow_failures:
   - env: OS=ubuntu DIST=artful
   - env: OS=ubuntu DIST=bionic
+  - env: OS=centos DIST=7.4.1708
 
 before_install:
   - git submodule update --init --recursive LTerminal
@@ -41,11 +43,12 @@ script: |-
   uname -a
   mkdir linux || true
   chmod -fR a+rwX $HOME/.ccache
-  docker run -it --rm -e OS=${OS}
+  CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.${OS}.cmake"
+  docker run -it --rm -e OS=${OS} -e DIST=${DIST}
              -w /LTerminal-linux/linux \
              -v $HOME/.ccache:/root/.ccache \
              -v $TRAVIS_BUILD_DIR:/LTerminal-linux ${DOCKER} \
-    bash -c "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/LinuxToolchain.cmake .. && make package"
+    bash -c "cmake $CMAKE_FLAGS .. && make package && eval \$PACKAGE_INSTALL *.\$PACKAGE_SUFFIX"
 
 after_success:
   - ccache -s || true

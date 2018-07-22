@@ -55,9 +55,9 @@ SET(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
     /usr/share/icons/hicolor/scalable
     /usr/share/icons/hicolor/scalable/apps)
 
-set(LTerminal_BIN_DIR bin)
-set(LTerminal_DOC_DIR share/doc/LTerminal)
-set(LTerminal_RES_DIR share/LTerminal/res)
+set(LTerminal_INSTALL_BIN bin)
+set(LTerminal_INSTALL_DOC share/doc/LTerminal)
+set(LTerminal_INSTALL_RES share/LTerminal/res)
 set(LFL_APP_ASSET_PATH ../share/LTerminal/res)
 
 include(core/CMake/LFLCore.cmake)
