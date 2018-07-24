@@ -13,6 +13,7 @@ env:
   matrix:
   - OS=ubuntu DIST=artful
   - OS=ubuntu DIST=bionic
+  - OS=ubuntu DIST=xenial
   - OS=centos DIST=7.4.1708
 
 matrix:
@@ -20,6 +21,7 @@ matrix:
   allow_failures:
   - env: OS=ubuntu DIST=artful
   - env: OS=ubuntu DIST=bionic
+  - env: OS=ubuntu DIST=xenial
   - env: OS=centos DIST=7.4.1708
 
 before_install:
@@ -48,7 +50,7 @@ script: |-
              -w /LTerminal-linux/linux \
              -v $HOME/.ccache:/root/.ccache \
              -v $TRAVIS_BUILD_DIR:/LTerminal-linux ${DOCKER} \
-    bash -c "cmake $CMAKE_FLAGS .. && make package && eval \$PACKAGE_INSTALL *.\$PACKAGE_SUFFIX"
+    bash -c "cmake $CMAKE_FLAGS .. && make package && eval \$PACKAGE_INSTALL ./*.\$PACKAGE_SUFFIX"
 
 after_success:
   - ccache -s || true
