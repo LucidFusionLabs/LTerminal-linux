@@ -57,15 +57,16 @@ script: |-
 after_success:
   - ccache -s || true
   - echo "success"
-  - md5sum *.{rpm,deb}
+  - md5sum $TRAVIS_BUILD_DIR/linux/*.{rpm,deb}
 
 deploy:
   provider: releases
   api_key:
     secure: 6G2uydndyXkMKomnB2dmf/X2aULqCRgmGBzmIhRhWscBE4kpmIWNv0iq8ebAGcBxMPI05mK7HzULiGUbK7nuIV0nv/jo4LzAuAW7QiruViMruMvLd2129DbSpCgIc4a3Y2+3RD8aAMMTWY+Hu4W2D1KppurOoSa+3Uaz9A04n+baSlqM4rkW8TLu8o1PRtbAutghAvsph6J3U8NVBC/PmIzhs7+7p9K04w/1bdL5r3+JClns25Jm/SKUniKHhd0/EY6QXRA35pR2ZAxmUFhKR0WmkZL6vnjGJRdSP4auwdJY+JphiSRhkn073vhbJQ43BV9rmg5cSTsxNWYX09gxJIjMH033fhu7uCmU6q6UndKQi3G/hBe1jGOm77yPqNNL42gt1IVlIPirinzrsIBoRO9MFU9McFCwD38z9Dq/IjQ1hC3MwsIJkJ53TQ9KjunYdUHs9XqnLu42kFOLNdEYP8mwNrIYoh5VFFrLg2IT99ZGRCG7SvI7O1bAPb3AwR/7Lgjlml6ylPlLpX0uF+xDuLdE0ikCUsPhFH17hqaXP/4BvFSAkAVgJjdyHTh/IFWD7avz89XzkTqvOrbyBUP1UQqu0Nvt7VY1QuGNic3gDgZwnClh4oDaSxtvRXuOBz/tvysg2BqiXINnw3Xp0LCWNB3+bBwOG7CYVXzTjpIURwg=
-  file_glob: true
-  file: $TRAVIS_BUILD_DIR/*.{rpm,deb}
   skip_cleanup: true
+  overwrite: true
+  file_glob: true
+  file: $TRAVIS_BUILD_DIR/linux/*.{rpm,deb}
   on:
     tags: true
 
